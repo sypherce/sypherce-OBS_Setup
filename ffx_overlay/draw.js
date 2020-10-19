@@ -53,16 +53,14 @@ export function LoadImage(_filename) {
 	return image_object;
 }
 
-export function text(text, font, fill, stroke, stroke_width, x, y) {
+export function text(text, font, align, fill, stroke, stroke_width, x, y) {
 	main_context.font = font;
+	main_context.textAlign = align;
 	if(stroke_width > 0.0) {
-		main_context.fillStyle = stroke;
-		main_context.fillText(text, x + stroke_width, y + stroke_width);
-		main_context.fillText(text, x - stroke_width, y - stroke_width);
-		main_context.fillText(text, x - stroke_width, y);
-		main_context.fillText(text, x, y - stroke_width);
-		main_context.fillText(text, x + stroke_width, y);
-		main_context.fillText(text, x, y + stroke_width);
+		main_context.strokeStyle = stroke;
+		main_context.miterLimit = 2;
+		main_context.lineWidth = stroke_width;
+		main_context.strokeText(text, x, y);
 	}
 	main_context.fillStyle = fill;
 	main_context.fillText(text, x, y);

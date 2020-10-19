@@ -24,17 +24,12 @@ function CountTo(value, target, steps) {
 }
 function CountToFloat(value, target, steps) {
 	var diff = (target - value) / steps;
-	var retval;
-	if(diff > 0)
-	{
-		retval = value + diff;
+	var retval = value + diff;
+	if(diff > 0) {
 		if(retval > target)
 			retval = target;
 	}
-	else
-	{
-		retval = value + diff;
-		if(retval < target)
+	else if(retval < target) {
 			retval = target;
 	}
 
@@ -82,7 +77,10 @@ export  function Character(_name, _x, _y) {
 			this.max_mp = this.max_mp_file.read();
 			this.slvl = CountTo(this.slvl, this.slvl_file.read(), steps);
 			var hp_mult = clamp(this.hp / this.max_hp, 0, 1);
+			if(isNaN(hp_mult)) hp_mult = 0;
 			var mp_mult = clamp(this.mp / this.max_mp, 0, 1);
+			if(isNaN(mp_mult)) mp_mult = 0;
+
 
 			//still not comfortable with JS syntax
 			//test that the (this.)x and (this.)y work, not being _x and _y
@@ -93,31 +91,30 @@ export  function Character(_name, _x, _y) {
 			x = this.x;
 			y = this.y;
 
-			y = y + 3
 			draw.radial_gradient_rect(x, y, face_rect_width, face_rect_height, 0, "#ffffff46", "#00000046");
 			this.face.draw(x, y);
-			draw.text(this.name.toUpperCase(), "normal 44px FinalFantasy", "black", "white", 1, x, y+40)
+			draw.text(this.name.toUpperCase(), "normal 44px FinalFantasy", "left", "black", "white", 4, x, y + 40)
 
 			x = x + face_rect_width
 			draw.linear_gradient_rect(x, y, bgrectWidth, bgrectHeight, 0, "#00000046", "#ffffff46");
 
 			x = x - 11
-			y = y + 13 + 2
+			y = y + 15
 			draw.rect(x + shadow, y + shadow, rectWidth, rectHeight, shear, "#000000d9");
 			draw.linear_pulsing_gradient_rect(x, y, Math.ceil(rectWidth * hp_mult), rectHeight, shear, "#ff0100bd", "#ff9100ff", gradient_pulse);
-			draw.text("HP", "normal 44px FinalFantasy", "white", "black", 3, x + 6, y + 24)
-			draw.text(this.hp, "bold italic 36px Georgia", "white", "black", 2, x + 75, y + 20)
+			draw.text("HP", "normal 44px FinalFantasy", "left", "white", "black", 6, x + 6, y + 24)
+			draw.text(this.hp, "bold italic 36px Georgia", "right", "white", "black", 4, x + 135, y + 20)
 
-			y = y + rectHeight + shadow + shadow+  6
+			y = y + rectHeight + shadow + shadow + 6
 			draw.rect(x + shadow, y + shadow, rectWidth, rectHeight, shear, "#000000d9");
 			draw.linear_pulsing_gradient_rect(x, y, Math.ceil(rectWidth * mp_mult), rectHeight, shear, "#23ff00bd", "#00ccffff", gradient_pulse);
-			draw.text("MP", "normal 44px FinalFantasy", "white", "black", 3, x + 6, y + 24)
-			draw.text(this.mp, "bold italic 36px Georgia", "white", "black", 2, x + 75, y + 20)
+			draw.text("MP", "normal 44px FinalFantasy", "left", "white", "black", 6, x + 6, y + 24)
+			draw.text(this.mp, "bold italic 36px Georgia", "right", "white", "black", 4, x + 135, y + 20)
 
 			x = x + 150
 			y = y + 20
-			draw.text(this.slvl, "bold italic 60px Georgia", "white", "black", 2, x, y)
-			draw.text("SLV", "normal 24px FinalFantasy", "white", "black", 2, x - 8, y + 15)
+			draw.text(this.slvl, "bold italic 60px Georgia", "left", "white", "black", 4, x, y)
+			draw.text("SLV", "normal 24px FinalFantasy", "left", "white", "black", 4, x - 8, y + 15)
 		}
 	}
 

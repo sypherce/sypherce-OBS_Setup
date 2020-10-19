@@ -45,11 +45,11 @@ function draw_bouncing_background(background, x_speed, y_speed) {
 function draw_all() {
 	draw_bouncing_background(background_image, 10, 8);
 
-	draw.text("TIME PLAYED             GIL", "normal 40px FinalFantasy", "white", "black", 2, 12, 48);
+	draw.text("TIME PLAYED             GIL", "normal 40px FinalFantasy", "left", "white", "black", 2, 12, 48);
 	draw.rect(14, 51, 108, 2, 0, "#FFFFFF");
 	draw.rect(185, 51, 26, 2, 0, "#FFFFFF");
-	draw.text(time_file.read(), "bold italic 28px Georgia", "white", "black", 2, 12, 76);
-	draw.text(gil_file.read(), "bold italic 28px Georgia", "white", "black", 2, 200, 76);
+	draw.text(time_file.read(), "bold italic 28px Georgia", "left", "white", "black", 2, 12, 76);
+	draw.text(gil_file.read(), "bold italic 28px Georgia", "left", "white", "black", 2, 183, 76);
 
 	update_gradient_pulse();
 	tidus_character.draw();
@@ -70,7 +70,7 @@ function init(background_filename, w, h, fps) {
 
 	var x = 3;
 	var y = 123;
-	var seperator = 117;
+	const seperator = 117;
 	tidus_character = Character("Tidus", x, y);
 	y = y + seperator;
 	yuna_character = Character("Yuna", x, y);
