@@ -2,6 +2,7 @@
 import AccessFile from '../access_file.js';
 import * as draw from './draw.js';
 function clamp(value, min, max) {
+	if(isNaN(value)) value = min;
 	return Math.min(Math.max(value, min), max);
 }
 function CountTo(value, target, steps) {
@@ -37,12 +38,21 @@ function CountToFloat(value, target, steps) {
 }
 var gradient_pulse = 0.5;
 var gradient_pulse_target = 1.0;
-export function update_gradient_pulse() {
-	gradient_pulse = CountToFloat(gradient_pulse, gradient_pulse_target, 50);
-	if(gradient_pulse + 0.1 >= 1.0)
-		gradient_pulse_target = 0.0;
-	if(gradient_pulse - 0.1 <= 0.0)
-		gradient_pulse_target = 1.0;
+var last_timestamp = 0
+const frame_timestamp = 1000.0 / 60;
+export function update_gradient_pulse(timestamp) {
+	if(last_timestamp == 0)
+		last_timestamp = timestamp;
+	const time_diff = timestamp - last_timestamp;
+	if(time_diff >= frame_timestamp)
+	{
+		last_timestamp = timestamp;
+		gradient_pulse = CountToFloat(gradient_pulse, gradient_pulse_target, time_diff * 2);
+		if(gradient_pulse + 0.1 >= 1.0)
+			gradient_pulse_target = 0.0;
+		if(gradient_pulse - 0.1 <= 0.0)
+			gradient_pulse_target = 1.0;
+	}
 }
 export  function Character(_name, _x, _y) {
 	const php_file = "../access_file.php?";
@@ -77,10 +87,7 @@ export  function Character(_name, _x, _y) {
 			this.max_mp = this.max_mp_file.read();
 			this.slvl = CountTo(this.slvl, this.slvl_file.read(), steps);
 			var hp_mult = clamp(this.hp / this.max_hp, 0, 1);
-			if(isNaN(hp_mult)) hp_mult = 0;
 			var mp_mult = clamp(this.mp / this.max_mp, 0, 1);
-			if(isNaN(mp_mult)) mp_mult = 0;
-
 
 			//still not comfortable with JS syntax
 			//test that the (this.)x and (this.)y work, not being _x and _y

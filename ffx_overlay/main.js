@@ -14,11 +14,20 @@ var rikku_character;
 var gil_file;
 var time_file;
 
-var x_direction = 1;
-var y_direction = 1;
-function draw_bouncing_background(background, x_speed, y_speed) {
+var x_direction = 0.001;
+var y_direction = 0.001;
+var last_timestamp = null;
+function draw_bouncing_background(background, x_speed, y_speed, timestamp) {
+	if(!last_timestamp)
+		last_timestamp = timestamp;
+	const time_diff = timestamp - last_timestamp;
+	last_timestamp = timestamp;
+
+	x_speed = x_speed * time_diff * x_direction;
+	y_speed = y_speed * time_diff * y_direction;
+
 	var max_x = background.image.naturalWidth - draw.get_width();
-	background.sx = background.sx + ((x_speed / draw.fps) * x_direction);
+	background.sx = background.sx + x_speed;
 	if(background.sx < 0) {
 		background.sx = 0;
 		x_direction = -x_direction;
@@ -29,7 +38,7 @@ function draw_bouncing_background(background, x_speed, y_speed) {
 	}
 
 	var max_y = background.image.naturalHeight - draw.get_height();
-	background.sy = background.sy + ((y_speed / draw.fps) * y_direction);
+	background.sy = background.sy + y_speed;
 	if(background.sy < 0) {
 		background.sy = 0;
 		y_direction = -y_direction;
@@ -42,8 +51,8 @@ function draw_bouncing_background(background, x_speed, y_speed) {
 	background.draw(background.sx, background.sy, draw.get_width(), draw.get_height(), 0, 0, draw.get_width(), draw.get_height());
 }
 
-function draw_all() {
-	draw_bouncing_background(background_image, 10, 8);
+function draw_all(timestamp) {
+	draw_bouncing_background(background_image, 10, 8, timestamp);
 
 	draw.text("TIME PLAYED             GIL", "normal 40px FinalFantasy", "left", "white", "black", 2, 12, 48);
 	draw.rect(14, 51, 108, 2, 0, "white");
@@ -51,7 +60,7 @@ function draw_all() {
 	draw.text(time_file.read(), "bold italic 28px Georgia", "left", "white", "black", 2, 12, 76);
 	draw.text(gil_file.read(), "bold italic 28px Georgia", "left", "white", "black", 2, 183, 76);
 
-	update_gradient_pulse();
+	update_gradient_pulse(timestamp);
 	tidus_character.draw();
 	yuna_character.draw();
 	auron_character.draw();
@@ -59,6 +68,7 @@ function draw_all() {
 	wakka_character.draw();
 	lulu_character.draw();
 	rikku_character.draw();
+	window.requestAnimationFrame(draw_all);
 }
 function init(background_filename, w, h, fps) {
 	draw.init(w, h, fps);
@@ -85,6 +95,7 @@ function init(background_filename, w, h, fps) {
 	y = y + seperator;
 	rikku_character = Character("Rikku", x, y);
 
-	setInterval(draw_all, Math.ceil(1000 / fps));
+	window.requestAnimationFrame(draw_all);
+	//setInterval(draw_all, Math.ceil(1000 / fps));
 }
 window.init = init;

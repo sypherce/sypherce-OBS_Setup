@@ -4,10 +4,12 @@ export default function AccessFile(_filename) {
 	var file_object = {
 		filename: _filename,
 		contents: "",
-		last_access: (new Date),
+		last_access: null,
 		read : function(_filename) {
 			var this_access = (new Date);
-			if(this_access - file_object.last_access >= 1000 / 2) {
+			if(!file_object.last_access)
+				file_object.last_access = this_access - 1000;
+			if(this_access - file_object.last_access >= 1000) {
 				file_object.last_access = this_access;
 				if(typeof _filename !== "undefined" && _filename !="")
 					this.filename = _filename;
