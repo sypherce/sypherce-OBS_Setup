@@ -1,5 +1,5 @@
 'use strict';
-import AccessFile from './access_file.js';
+import AccessFile from '../access_file.js';
 import {Character, update_gradient_pulse} from './character.js';
 import * as draw from './draw.js';
 

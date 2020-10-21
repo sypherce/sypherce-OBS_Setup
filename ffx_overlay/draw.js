@@ -1,5 +1,5 @@
 'use strict';
-import AccessFile from './access_file.js';
+import AccessFile from '../access_file.js';
 
 export var main_canvas;
 export var temp_canvas;

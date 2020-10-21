@@ -1,6 +1,6 @@
 'use strict';
 export default function AccessFile(_filename) {
-	const php_file = "access_file.php?";
+	const php_file = "../access_file.php?";
 	var file_object = {
 		filename: _filename,
 		contents: "",

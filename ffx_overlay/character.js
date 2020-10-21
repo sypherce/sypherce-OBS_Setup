@@ -1,5 +1,5 @@
 'use strict';
-import AccessFile from './access_file.js';
+import AccessFile from '../access_file.js';
 import * as draw from './draw.js';
 function clamp(value, min, max) {
 	return Math.min(Math.max(value, min), max);
@@ -45,7 +45,7 @@ export function update_gradient_pulse() {
 		gradient_pulse_target = 1.0;
 }
 export  function Character(_name, _x, _y) {
-	const php_file = "access_file.php?";
+	const php_file = "../access_file.php?";
 	var character_object = {
 		name: _name,
 		face: draw.LoadImage("assets/" + _name.toLowerCase() + "_face.png"),
