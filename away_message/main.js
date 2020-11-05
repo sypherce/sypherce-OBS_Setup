@@ -8,14 +8,13 @@ var away_message = back_symbol;
 var away_message_file;
 
 function init(_canvas, _tempCanvas, _width, _height) {
-
 	away_message_file = AccessFile("filename=away_message/away_message.txt");
 
-	setInterval(update, 1000 / fps_val);
+	window.requestAnimationFrame(update);
 }
 window.init = init;
 
-function update() {
+function update(timestamp) {
 	var contents = away_message_file.read();
 	if(contents != away_message)
 	{
@@ -24,4 +23,6 @@ function update() {
 	}
 	if(contents == back_symbol)
 		document.getElementById("away_text").style.visibility = "hidden";
+
+	window.requestAnimationFrame(update);
 }
