@@ -1,2 +1,4 @@
 overlay/memory_reader/password.txt
 away_message/away_message.txt
+overlay/assets/*/*/*.txt
+overlay/assets/*/*.txt
