@@ -6,6 +6,6 @@
 <link rel="stylesheet" href="main.css">
 <script type="module" src="main_<?php echo $_GET["game"];?>.js?time=<?php echo time();?>"></script>
 </head>
-<body onload="init('assets/<?php echo $_GET["game"];?>/background.png', 1920, 1080, 20);">
+<body onload="init('assets/<?php echo $_GET["game"];?>/background.png', 1920, 1080, 60);">
 </body>
 </html>
